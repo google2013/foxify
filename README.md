@@ -1,2 +1,2 @@
 # foxify
-The fast, easy to use &amp; typescript ready framework for Node.js
+The fast, easy to use &amp; typescript ready web framework for Node.js
