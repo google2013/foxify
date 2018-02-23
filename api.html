@@ -15,8 +15,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="The fast, easy to use & typescript ready web framework for Node.js">
+  <meta name="author" content="Foxifyjs">
 
   <link rel="shortcut icon" href="favicon.ico">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -25,7 +25,8 @@
   <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
 
   <!-- Plugins CSS -->
-  <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+  <!-- <link rel="stylesheet" href="assets/plugins/prism/prism.css"> -->
+  <link rel="stylesheet" href="assets/plugins/highlight/highlight.css">
   <link rel="stylesheet" href="assets/plugins/lightbox/dist/ekko-lightbox.min.css">
   <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">
 
@@ -67,28 +68,86 @@
       <div class="container">
         <div id="doc-header" class="doc-header text-center">
           <h1 class="doc-title"><span aria-hidden="true" class="icon icon_puzzle_alt"></span> API Reference</h1>
-          <div class="meta"><i class="far fa-clock"></i> Last updated: Feb 20th, 2018</div>
+          <div class="meta"><i class="far fa-clock"></i> Last updated: Feb 23th, 2018</div>
         </div>
         <!--//doc-header-->
         <div class="doc-body">
           <div class="doc-content">
             <div class="content-inner">
-              <section class="doc-section">
 
-                <div id="API" class="section-block">
+              <section id="foxify" class="doc-section">
+                <h2 class="section-title">Foxify</h2>
+
+                <div class="section-block">
+                  <p>
+                    Creates an Foxify instance
+                  </p>
+
+                  <div class="code-block">
+                    <pre class="highlight"><code class="javascript">const Foxify = require('foxify')
+
+const app = new Foxify()</code></pre>
+                  </div>
+                </div>
+
+                <div id="foxify-static" class="section-block">
+                  <h3 class="block-title">Foxify.static</h3>
+
+                  <p>
+                    This is a built-in middleware function in Foxify. It serves static files and is based on <a href="https://github.com/expressjs/serve-static" target="_blank" rel="nofollow">serve-static</a>.
+                  </p>
+
                   <div class="callout-block callout-info">
                     <div class="icon-holder">
                       <i class="fa fa-info-circle"></i>
                     </div>
                     <!--//icon-holder-->
                     <div class="content">
-                      <h4 class="callout-title">We're still working on this page</h4>
+                      <h4 class="callout-title">NOTE:</h4>
+                      <p>For best results, use a reverse proxy cache to improve performance of serving static assets.</p>
                     </div>
                     <!--//content-->
                   </div>
                   <!--//callout-block-->
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">let options = {
+  dotfiles: 'ignore',
+  etag: false,
+  extensions: ['htm', 'html'],
+  index: false,
+  maxAge: '1d',
+  redirect: false,
+  setHeaders: function (res, path, stat) {
+    res.set('x-timestamp', Date.now())
+  }
+}
+
+app.use(Foxify.static(path.join(__dirname, 'public'), options))</code></pre>
+                  </div>
+                  <!--//code-block-->
                 </div>
 
+                <div id="foxify-route" class="section-block">
+                  <h3 class="block-title">Foxify.Route</h3>
+
+                  <p>
+                    Creates a new Route instance.
+                  </p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">const route = new Foxify.Route()
+
+route.get('/', (req, res) => {
+  res.send('hello world')
+})</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
               </section>
 
             </div>
@@ -98,7 +157,13 @@
           <div class="doc-sidebar">
             <nav id="doc-nav">
               <ul id="doc-menu" class="nav doc-menu hidden-xs" data-spy="affix">
-                <li><a class="scrollto" href="#dashboards">API</a></li>
+                <li>
+                  <a class="scrollto" href="#foxify">Foxify</a>
+                  <ul class="nav doc-sub-menu">
+                    <li><a class="scrollto" href="#foxify-static">Foxify.static</a></li>
+                    <li><a class="scrollto" href="#foxify-route">Foxify.Route</a></li>
+                  </ul>
+                </li>
               </ul>
               <!--//doc-menu-->
             </nav>
@@ -128,11 +193,16 @@
   <!-- Main Javascript -->
   <script type="text/javascript" src="assets/plugins/jquery-1.12.3.min.js"></script>
   <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="assets/plugins/prism/prism.js"></script>
+  <!-- <script type="text/javascript" src="assets/plugins/prism/prism.js"></script> -->
+  <script type="text/javascript" src="assets/plugins/highlight/highlight.pack.js"></script>
   <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>
   <script type="text/javascript" src="assets/plugins/lightbox/dist/ekko-lightbox.min.js"></script>
   <script type="text/javascript" src="assets/plugins/jquery-match-height/jquery.matchHeight-min.js"></script>
   <script type="text/javascript" src="assets/js/main.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
 
 </body>
 
