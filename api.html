@@ -131,7 +131,7 @@ app.use(Foxify.static(path.join(__dirname, 'public'), options))</code></pre>
                 </div>
 
                 <div id="foxify-route" class="section-block">
-                  <h3 class="block-title">Foxify.Route</h3>
+                  <h3 class="block-title">Foxify.route</h3>
 
                   <p>
                     Creates a new Route instance.
@@ -140,11 +140,13 @@ app.use(Foxify.static(path.join(__dirname, 'public'), options))</code></pre>
                   <div class="code-block">
                     <h6>example:</h6>
 
-                    <pre class="highlight"><code class="javascript">const route = new Foxify.Route()
+                    <pre class="highlight"><code class="javascript">const route = Foxify.route()
 
 route.get('/', (req, res) => {
   res.send('hello world')
-})</code></pre>
+})
+
+app.use(route)</code></pre>
                   </div>
                   <!--//code-block-->
                 </div>
@@ -161,7 +163,7 @@ route.get('/', (req, res) => {
                   <a class="scrollto" href="#foxify">Foxify</a>
                   <ul class="nav doc-sub-menu">
                     <li><a class="scrollto" href="#foxify-static">Foxify.static</a></li>
-                    <li><a class="scrollto" href="#foxify-route">Foxify.Route</a></li>
+                    <li><a class="scrollto" href="#foxify-route">Foxify.route</a></li>
                   </ul>
                 </li>
               </ul>
