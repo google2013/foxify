@@ -79,7 +79,7 @@
 
                 <div class="section-block">
                   <p>
-                    Creates an Foxify instance
+                    Creates a Foxify instance
                   </p>
 
                   <div class="code-block">
@@ -90,7 +90,7 @@ const app = new Foxify()</code></pre>
                 </div>
 
                 <div id="foxify-constants" class="section-block">
-                  <h3 class="block-title">constants</h3>
+                  <h3 class="block-title">Foxify.constants</h3>
 
                   <p>
                     Foxify constants.
@@ -105,13 +105,13 @@ const app = new Foxify()</code></pre>
                 </div>
 
                 <div id="foxify-db" class="section-block">
-                  <h3 class="block-title">DB</h3>
+                  <h3 class="block-title">Foxify.DB</h3>
 
                   <p>go to <a class="scrollto" href="#database">Database</a> API References.</p>
                 </div>
 
                 <div id="foxify-route" class="section-block">
-                  <h3 class="block-title">route</h3>
+                  <h3 class="block-title">Foxify.route</h3>
 
                   <p>
                     Creates a new <a class="scrollto" href="#routing">Route</a> instance.
@@ -133,7 +133,7 @@ const app = new Foxify()</code></pre>
                 </div>
 
                 <div id="foxify-static" class="section-block">
-                  <h3 class="block-title">static</h3>
+                  <h3 class="block-title">Foxify.static</h3>
 
                   <p>
                     This is a built-in middleware function in Foxify. It serves static files and is based on <a href="https://github.com/expressjs/serve-static" target="_blank" rel="nofollow">serve-static</a>.
@@ -171,6 +171,187 @@ app.use(Foxify.static(path.join(__dirname, 'public'), options))</code></pre>
                   </div>
                   <!--//code-block-->
                 </div>
+
+                <div id="foxify-options" class="section-block">
+                  <h3 class="block-title">Options</h3>
+
+                  <p>Options are some true/false variables that determine the instance behavior</p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">app.disable('x-powered-by')
+app.enabled('x-powered-by') // false
+
+app.enable('json.escape')
+app.disabled('json.escape') // false</code></pre>
+                  </div>
+                  <!--//code-block-->
+
+                  <h6>available options:</h6>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Option</th>
+                          <th>Description</th>
+                          <th>Default</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>x-powered-by</code></td>
+                          <td>When <b>enabled</b> every response will be sent with 'x-powered-by' header</td>
+                          <td><code>enabled</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>routing.strict</code></td>
+                          <td>When <b>disabled</b> the trailing slash is optional</td>
+                          <td><code>disabled</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>routing.sensitive</code></td>
+                          <td>When <b>enabled</b> the route will be case sensitive</td>
+                          <td><code>enabled</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>json.escape</code></td>
+                          <td>When <b>enabled</b> the characters <, >, and & will be escaped as Unicode escape sequences in JSON</td>
+                          <td><code>disabled</code></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div id="foxify-settings" class="section-block">
+                  <h3 class="block-title">Settings</h3>
+
+                  <p>Settings are the other variables that determine the instance behavior</p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">app.set('clusters', 2)
+app.get('clusters') // 2</code></pre>
+                  </div>
+                  <!--//code-block-->
+
+                  <h6>available settings:</h6>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Setting</th>
+                          <th>Description</th>
+                          <th>Type</th>
+                          <th>Default</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>env</code></td>
+                          <td>Sets the <code>process.env.NODE_ENV</code> value</td>
+                          <td><code>String</code></td>
+                          <td><code>process.env.NODE_ENV</code> or <code>'production'</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>url</code></td>
+                          <td>Sets the application url value</td>
+                          <td><code>String</code></td>
+                          <td><code>process.env.APP_URL</code> or <code>'localhost'</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>port</code></td>
+                          <td>Sets the application port value</td>
+                          <td><code>Number</code></td>
+                          <td><code>+process.env.APP_PORT</code> or <code>3000</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>clusters</code></td>
+                          <td>Sets the number of application workers</td>
+                          <td><code>Number</code></td>
+                          <td><code>+process.env.CLUSTERS</code> or <code>require('os').cpus().length</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>json.replacer</code></td>
+                          <td>Sets the The 'replacer' argument used by <code>JSON.stringify</code></td>
+                          <td><code>Function</code></td>
+                          <td><code>null</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>json.spaces</code></td>
+                          <td>Sets the The 'spaces' argument used by <code>JSON.stringify</code></td>
+                          <td><code>Number</code></td>
+                          <td><code>null</code></td>
+                        </tr>
+                        <tr>
+                          <td><code>query.parser</code></td>
+                          <td>Sets the custom query string parsing function that will receive the complete query string, and must return an object of query keys and their values</td>
+                          <td><code>Function</code></td>
+                          <td><code>null</code></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div id="foxify-view" class="section-block">
+                  <h3 class="block-title">View Engine</h3>
+
+                  <p>Registers the given template engine callback as View Engine</p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">app.engine('ejs', path.join(__dirname, 'views'), require('ejs').__express)</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
+                <div id="foxify-use" class="section-block">
+                  <h3 class="block-title">Use</h3>
+
+                  <p>Mounts the specified middleware function or functions at the specified path</p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">app.use(require('morgan')('dev')) // applied for all routes
+
+app.use('/sample_path', require('morgan')('dev')) // applied only for '/sample_path' sub routes
+
+app.use(route) // apply routes by giving the route instance</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
+                <div id="foxify-methods" class="section-block">
+                  <h3 class="block-title">Methods</h3>
+
+                  <p>Refer to <a class="scrollto" href="#routing">route</a> methods</p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">app.get('/greet', (req, res) => res.send('Hello World!'))</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
+                <div id="foxify-start" class="section-block">
+                  <h3 class="block-title">Start</h3>
+
+                  <p>Starts listening to the given <code>url</code> and <code>port</code> by <a class="scrollto" href="#foxify-settings">settings</a></p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">app.start(() => console.log(`Foxify server running at http://localhost:3000 (worker: ${process.pid})`))</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
               </section>
 
             </div>
@@ -183,10 +364,16 @@ app.use(Foxify.static(path.join(__dirname, 'public'), options))</code></pre>
                 <li>
                   <a class="scrollto" href="#foxify">Foxify</a>
                   <ul class="nav doc-sub-menu">
-                    <li><a class="scrollto" href="#foxify-constants">constants</a></li>
-                    <li><a class="scrollto" href="#foxify-db">DB</a></li>
-                    <li><a class="scrollto" href="#foxify-route">route</a></li>
-                    <li><a class="scrollto" href="#foxify-static">static</a></li>
+                    <li><a class="scrollto" href="#foxify-constants">Foxify.constants</a></li>
+                    <li><a class="scrollto" href="#foxify-db">Foxify.DB</a></li>
+                    <li><a class="scrollto" href="#foxify-route">Foxify.route</a></li>
+                    <li><a class="scrollto" href="#foxify-static">Foxify.static</a></li>
+                    <li><a class="scrollto" href="#foxify-options">Options</a></li>
+                    <li><a class="scrollto" href="#foxify-settings">Settings</a></li>
+                    <li><a class="scrollto" href="#foxify-view">View Engine</a></li>
+                    <li><a class="scrollto" href="#foxify-use">Use</a></li>
+                    <li><a class="scrollto" href="#foxify-methods">Methods</a></li>
+                    <li><a class="scrollto" href="#foxify-start">Start</a></li>
                   </ul>
                 </li>
               </ul>
