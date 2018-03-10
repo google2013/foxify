@@ -67,7 +67,7 @@
       <div class="container">
         <div id="doc-header" class="doc-header text-center">
           <h1 class="doc-title"><span aria-hidden="true" class="icon icon_puzzle_alt"></span> API Reference</h1>
-          <div class="meta"><i class="far fa-clock"></i> Last updated: Mar 9th, 2018</div>
+          <div class="meta"><i class="far fa-clock"></i> Last updated: Mar 10th, 2018</div>
         </div>
         <!--//doc-header-->
         <div class="doc-body">
@@ -232,8 +232,8 @@ app.disabled('json.escape') // false</code></pre>
                   <div class="code-block">
                     <h6>example:</h6>
 
-                    <pre class="highlight"><code class="javascript">app.set('clusters', 2)
-app.get('clusters') // 2</code></pre>
+                    <pre class="highlight"><code class="javascript">app.set('workers', 2)
+app.get('workers') // 2</code></pre>
                   </div>
                   <!--//code-block-->
 
@@ -268,10 +268,10 @@ app.get('clusters') // 2</code></pre>
                           <td><code>+process.env.APP_PORT</code> or <code>3000</code></td>
                         </tr>
                         <tr>
-                          <td><code>clusters</code></td>
+                          <td><code>workers</code></td>
                           <td>Sets the number of application workers</td>
                           <td><code>Number</code></td>
-                          <td><code>+process.env.CLUSTERS</code> or <code>require('os').cpus().length</code></td>
+                          <td><code>+process.env.WORKERS</code> or <code>require('os').cpus().length</code></td>
                         </tr>
                         <tr>
                           <td><code>json.replacer</code></td>
