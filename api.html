@@ -67,7 +67,7 @@
       <div class="container">
         <div id="doc-header" class="doc-header text-center">
           <h1 class="doc-title"><span aria-hidden="true" class="icon icon_puzzle_alt"></span> API Reference</h1>
-          <div class="meta"><i class="far fa-clock"></i> Last updated: Mar 10th, 2018</div>
+          <div class="meta"><i class="far fa-clock"></i> Last updated: Mar 26th, 2018</div>
         </div>
         <!--//doc-header-->
         <div class="doc-body">
@@ -114,7 +114,7 @@ const app = new Foxify()</code></pre>
                   <h3 class="block-title">Foxify.route</h3>
 
                   <p>
-                    Creates a new <a class="scrollto" href="#routing">Route</a> instance.
+                    Creates a new <a class="scrollto" href="#route">Route</a> instance.
                   </p>
 
                   <div class="code-block">
@@ -168,6 +168,23 @@ const app = new Foxify()</code></pre>
 }
 
 app.use(Foxify.static(path.join(__dirname, 'public'), options))</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
+                <div id="foxify-dotenv" class="section-block">
+                  <h3 class="block-title">Foxify.dotenv</h3>
+
+                  <p>
+                    This is a built-in function in Foxify. It loads environment variables from a `.env` file into `process.env` using <a href="https://github.com/motdotla/dotenv" target="_blank">dotenv</a> package.
+                  </p>
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">const path = require("path")
+
+Foxify.dotenv(path.join(__dirname, '.env'))</code></pre>
                   </div>
                   <!--//code-block-->
                 </div>
@@ -312,7 +329,7 @@ app.get('workers') // 2</code></pre>
                 <div id="foxify-use" class="section-block">
                   <h3 class="block-title">Use</h3>
 
-                  <p>Mounts the specified middleware function or functions at the specified path</p>
+                  <p>Refer to <a class="scrollto" href="#route-use">route use</a></p>
 
                   <div class="code-block">
                     <h6>example:</h6>
@@ -329,7 +346,7 @@ app.use(route) // apply routes by giving the route instance</code></pre>
                 <div id="foxify-methods" class="section-block">
                   <h3 class="block-title">Methods</h3>
 
-                  <p>Refer to <a class="scrollto" href="#routing">route</a> methods</p>
+                  <p>Refer to <a class="scrollto" href="#route-methods">route methods</a></p>
 
                   <div class="code-block">
                     <h6>example:</h6>
@@ -347,7 +364,90 @@ app.use(route) // apply routes by giving the route instance</code></pre>
                   <div class="code-block">
                     <h6>example:</h6>
 
-                    <pre class="highlight"><code class="javascript">app.start(() => console.log(`Foxify server running at http://localhost:3000 (worker: ${process.pid})`))</code></pre>
+                    <pre class="highlight"><code class="javascript">app.start(() => console.log(`Foxify server running at http://${app.get("url")}:${app.get("port")} (worker: ${process.pid})`))</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
+              </section>
+
+              <section id="route" class="doc-section">
+                <h2 class="section-title">Route</h2>
+
+                <div class="section-block">
+                  <p>
+                    Creates a Route instance
+                  </p>
+
+                  <div class="code-block">
+                    <pre class="highlight"><code class="javascript">const Route = require('foxify/framework/routing/route')
+
+const route = new Route(/* prefix */) // or Foxify.route(/* prefix */)</code></pre>
+                  </div>
+                </div>
+
+                <div id="route-methods" class="section-block">
+                  <h3 class="block-title">Methods</h3>
+
+                  <p>
+                    listen to the specified method and path and send a proper respond.
+                  </p>
+
+                  <div class="code-block">
+                    <h6>api:</h6>
+
+                    <pre class="highlight"><code class="typescript">route[method: string](path: string, (req: http.IncommingMassage, res: http.ServerResponse, next: () => void, ...args: any[]) => any): route</code></pre>
+                  </div>
+                  <!--//code-block-->
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">route.get("/path/:arg1/:arg2", (req, res, next, arg1, arg2) => res.send("Hello World!"))</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
+                <div id="route-oneOf" class="section-block">
+                  <h3 class="block-title">OneOf</h3>
+
+                  <p>listen to the specified methods and path and send a proper respond.</p>
+
+                  <div class="code-block">
+                    <h6>api:</h6>
+
+                    <pre class="highlight"><code class="typescript">route.oneOf(methods: string[], path: string, ...controllers: Route.Controller[]): route</code></pre>
+                  </div>
+                  <!--//code-block-->
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">route.oneOf(["GET", "POST"], "/greet", (req, res, next) => next(), (req, res) => res.send("Hello!"))</code></pre>
+                  </div>
+                  <!--//code-block-->
+                </div>
+
+                <div id="route-use" class="section-block">
+                  <h3 class="block-title">Use</h3>
+
+                  <p>Mounts the specified middleware function or functions at the specified path</p>
+
+                  <div class="code-block">
+                    <h6>api:</h6>
+
+                    <pre class="highlight"><code class="typescript">route.use(path: string | Route | Route.Controller, ...controllers: Route.Controller[]): route</code></pre>
+                  </div>
+                  <!--//code-block-->
+
+                  <div class="code-block">
+                    <h6>example:</h6>
+
+                    <pre class="highlight"><code class="javascript">route.use(require('morgan')('dev')) // applied for all routes
+
+route.use('/sample_path', require('morgan')('dev')) // applied only for '/sample_path' sub routes
+
+route.use(route) // apply routes by giving the route instance</code></pre>
                   </div>
                   <!--//code-block-->
                 </div>
@@ -368,12 +468,21 @@ app.use(route) // apply routes by giving the route instance</code></pre>
                     <li><a class="scrollto" href="#foxify-db">Foxify.DB</a></li>
                     <li><a class="scrollto" href="#foxify-route">Foxify.route</a></li>
                     <li><a class="scrollto" href="#foxify-static">Foxify.static</a></li>
+                    <li><a class="scrollto" href="#foxify-dotenv">Foxify.dotenv</a></li>
                     <li><a class="scrollto" href="#foxify-options">Options</a></li>
                     <li><a class="scrollto" href="#foxify-settings">Settings</a></li>
                     <li><a class="scrollto" href="#foxify-view">View Engine</a></li>
                     <li><a class="scrollto" href="#foxify-use">Use</a></li>
                     <li><a class="scrollto" href="#foxify-methods">Methods</a></li>
                     <li><a class="scrollto" href="#foxify-start">Start</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="scrollto" href="#route">Route</a>
+                  <ul class="nav doc-sub-menu">
+                    <li><a class="scrollto" href="#route-methods">Methods</a></li>
+                    <li><a class="scrollto" href="#route-oneOf">OneOf</a></li>
+                    <li><a class="scrollto" href="#route-use">Use</a></li>
                   </ul>
                 </li>
               </ul>
